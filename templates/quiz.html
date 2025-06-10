@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Quiz Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Math Quiz Game</h1>
+      <p class="username">Pemain: {{ username }}</p>
+      <p>Round: {{ round }} / 10</p>
+      <p>Score: {{ score }}</p>
+      {% if last_feedback %}
+      <div class="feedback">{{ last_feedback }}</div>
+      {% endif %}
+      <h2>Selesaikan: {{ question }} = ?</h2>
+      <p>Waktu tersisa: <span id="timer">10</span> detik</p>
+      <form id="quizForm" method="POST" action="{{ url_for('quiz') }}">
+        <input type="text" name="answer" placeholder="Jawaban Anda" autocomplete="off" required />
+        <button type="submit">Kirim Jawaban</button>
+      </form>
+      <a class="reset-link" href="{{ url_for('reset') }}">Reset Game</a>
+    </div>
+    <script>
+      // Timer countdown 10 detik untuk setiap soal
+      let timeLeft = 10;
+      let timerId = setInterval(function () {
+        if (timeLeft <= 0) {
+          clearInterval(timerId);
+          document.getElementById("quizForm").submit();
+        } else {
+          document.getElementById("timer").innerText = timeLeft;
+        }
+        timeLeft -= 1;
+      }, 1000);
+    </script>
+  </body>
+</html>

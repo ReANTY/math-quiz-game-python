@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hasil Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎉 Game Selesai!</h1>
+      <div class="result-card">
+        <p class="player-name">{{ username }}</p>
+        <div class="score-display">
+          <h2>Skor Anda: {{ score }} / {{ total }}</h2>
+          <p class="percentage">{{ "%.0f"|format((score / total) * 100) }}%</p>
+        </div>
+
+        {% if best_score > 0 %}
+        <div class="best-score">
+          <p>Skor Terbaik Anda: {{ best_score }}/10</p>
+          {% if score >= best_score %}
+          <p class="achievement">🎊 Skor Terbaik Baru!</p>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="action-buttons">
+        <a href="{{ url_for('quiz') }}" class="btn-primary">Main Lagi</a>
+        <a href="{{ url_for('leaderboard') }}" class="btn-secondary">Lihat Leaderboard</a>
+        <a href="{{ url_for('profile') }}" class="btn-secondary">Profil Saya</a>
+        <a href="{{ url_for('home') }}" class="btn-secondary">Beranda</a>
+      </div>
+    </div>
+  </body>
+</html>

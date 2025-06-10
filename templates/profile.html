@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Quiz - Profil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <nav class="nav-bar">
+        <a href="{{ url_for('home') }}">Beranda</a>
+        <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      </nav>
+
+      <h1>👤 Profil Pengguna</h1>
+
+      <div class="profile-section">
+        <div class="user-info">
+          <h2>{{ user.username }}</h2>
+          <p class="email">{{ user.email }}</p>
+          <p class="join-date">Bergabung: {{ user.created_at.strftime('%d/%m/%Y') }}</p>
+        </div>
+
+        <div class="stats-cards">
+          <div class="stat-card">
+            <h3>{{ total_games }}</h3>
+            <p>Total Game</p>
+          </div>
+          <div class="stat-card">
+            <h3>{{ best_score }}/10</h3>
+            <p>Skor Terbaik</p>
+          </div>
+          <div class="stat-card">
+            <h3>{{ avg_score }}</h3>
+            <p>Rata-rata</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-history-section">
+        <h2>Riwayat Game</h2>
+        {% if game_results %}
+        <div class="game-history">
+          {% for result in game_results %}
+          <div class="history-item">
+            <div class="score">
+              <span class="score-text">{{ result.score }}/{{ result.total_questions }}</span>
+              <span class="percentage">{{ "%.0f"|format((result.score / result.total_questions) * 100) }}%</span>
+            </div>
+            <div class="details">
+              <span class="date">{{ result.played_at.strftime('%d/%m/%Y %H:%M') }}</span>
+              {% if result.time_taken %}
+              <span class="time">{{ result.time_taken }}s</span>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="no-data">Belum ada riwayat game. <a href="{{ url_for('quiz') }}">Mulai bermain!</a></p>
+        {% endif %}
+      </div>
+
+      <div class="action-buttons">
+        <a href="{{ url_for('home') }}" class="btn-secondary">Kembali ke Beranda</a>
+        <a href="{{ url_for('quiz') }}" class="btn-primary">Mulai Quiz Baru</a>
+      </div>
+    </div>
+  </body>
+</html>

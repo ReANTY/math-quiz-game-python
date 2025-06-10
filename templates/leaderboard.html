@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Quiz - Leaderboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <nav class="nav-bar">
+        <a href="{{ url_for('home') }}">Beranda</a>
+        {% if session.username %}
+        <a href="{{ url_for('profile') }}">Profil</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        {% endif %}
+      </nav>
+
+      <h1>🏆 Leaderboard</h1>
+
+      <div class="leaderboard-section">
+        <h2>Top 10 Pemain Terbaik</h2>
+        {% if top_scores %}
+        <div class="leaderboard-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Skor Terbaik</th>
+                <th>Rata-rata</th>
+                <th>Total Game</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for score in top_scores %}
+              <tr class="{% if loop.index <= 3 %}top-{{ loop.index }}{% endif %}">
+                <td>{% if loop.index == 1 %}🥇 {% elif loop.index == 2 %}🥈 {% elif loop.index == 3 %}🥉 {% else %}{{ loop.index }} {% endif %}</td>
+                <td>{{ score.username }}</td>
+                <td>{{ score.best_score }}/10</td>
+                <td>{{ "%.1f"|format(score.avg_score) }}</td>
+                <td>{{ score.games_played }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="no-data">Belum ada data pemain. Jadilah yang pertama!</p>
+        {% endif %}
+      </div>
+
+      <div class="recent-games-section">
+        <h2>Game Terbaru</h2>
+        {% if recent_games %}
+        <div class="recent-games">
+          {% for game in recent_games %}
+          <div class="game-item">
+            <span class="username">{{ game.username }}</span>
+            <span class="score">{{ game.score }}/10</span>
+            <span class="date">{{ game.played_at.strftime('%d/%m %H:%M') }}</span>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="no-data">Belum ada game yang dimainkan.</p>
+        {% endif %}
+      </div>
+
+      <div class="action-buttons">
+        <a href="{{ url_for('home') }}" class="btn-secondary">Kembali ke Beranda</a>
+        {% if session.username %}
+        <a href="{{ url_for('quiz') }}" class="btn-primary">Mulai Quiz</a>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>

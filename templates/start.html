@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Quiz - Mulai Permainan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Flash Messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+
+      <!-- Navigation -->
+      <nav class="nav-bar">
+        {% if session.username %}
+        <span class="welcome">Selamat datang, {{ session.username }}!</span>
+        <div class="nav-links">
+          <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
+          <a href="{{ url_for('profile') }}">Profil</a>
+          <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+        {% else %}
+        <div class="nav-links">
+          <a href="{{ url_for('login') }}">Login</a>
+          <a href="{{ url_for('register') }}">Daftar</a>
+          <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
+        </div>
+        {% endif %}
+      </nav>
+
+      <h1>Selamat Datang di Math Quiz Game!</h1>
+      <p>Siap mengasah kemampuan hitung cepat? Klik tombol di bawah untuk memulai quiz.</p>
+
+      {% if session.username %}
+      <a class="start-button" href="{{ url_for('quiz') }}">Start Quiz</a>
+      {% else %}
+      <p class="login-notice">Silakan <a href="{{ url_for('login') }}">login</a> atau <a href="{{ url_for('register') }}">daftar</a> terlebih dahulu untuk bermain!</p>
+      {% endif %}
+    </div>
+  </body>
+</html>

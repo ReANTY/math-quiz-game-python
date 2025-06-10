@@ -1,0 +1,510 @@
+/* Reset margin dan padding dasar */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Font global dan background */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #74abe2, #5563de);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container utama */
+.container {
+  background: #ffffff;
+  max-width: 600px;
+  width: 90%;
+  margin: auto;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+/* Container untuk leaderboard - lebih lebar */
+.container.leaderboard {
+  max-width: 800px;
+}
+
+/* Header */
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Navigation Bar */
+.nav-bar {
+  background: #f8f9fa;
+  padding: 15px;
+  margin: -30px -30px 20px -30px;
+  border-radius: 15px 15px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-bar .welcome {
+  font-weight: bold;
+  color: #333;
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: #007bff;
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.nav-links a:hover {
+  background-color: #e9ecef;
+}
+
+/* Flash Messages */
+.flash-messages {
+  margin-bottom: 20px;
+}
+
+.flash {
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.flash.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.flash.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.flash.warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+
+.flash.info {
+  background-color: #cce7ff;
+  color: #004085;
+  border: 1px solid #b3d7ff;
+}
+
+/* Auth Forms */
+.auth-form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.auth-links {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.auth-links a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.auth-links a:hover {
+  text-decoration: underline;
+}
+
+.login-notice {
+  background-color: #fff3cd;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 20px 0;
+}
+
+/* Leaderboard Styles */
+.leaderboard-section,
+.recent-games-section {
+  margin: 30px 0;
+}
+
+.leaderboard-table {
+  overflow-x: auto;
+}
+
+.leaderboard-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.leaderboard-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.leaderboard-table .top-1 {
+  background-color: #fff9c4;
+}
+
+.leaderboard-table .top-2 {
+  background-color: #f0f0f0;
+}
+
+.leaderboard-table .top-3 {
+  background-color: #ffeaa7;
+}
+
+.recent-games {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.game-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+}
+
+.no-data {
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* Profile Styles */
+.profile-section {
+  margin: 30px 0;
+}
+
+.user-info {
+  margin-bottom: 30px;
+}
+
+.user-info h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.user-info .email {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.user-info .join-date {
+  color: #6c757d;
+  font-size: 12px;
+}
+
+.stats-cards {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  flex: 1;
+  min-width: 100px;
+}
+
+.stat-card h3 {
+  font-size: 2em;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.stat-card p {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.game-history-section {
+  margin: 30px 0;
+}
+
+.game-history {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+}
+
+.history-item .score {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.score-text {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.percentage {
+  color: #6c757d;
+  font-size: 0.9em;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.9em;
+  color: #6c757d;
+}
+
+/* Result Page Styles */
+.result-card {
+  background-color: #f8f9fa;
+  padding: 30px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.player-name {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.score-display h2 {
+  font-size: 2.5em;
+  color: #28a745;
+  margin: 10px 0;
+}
+
+.score-display .percentage {
+  font-size: 1.5em;
+  color: #6c757d;
+}
+
+.best-score {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #e9ecef;
+  border-radius: 5px;
+}
+
+.achievement {
+  color: #28a745;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+/* Button Styles */
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 30px 0;
+}
+
+.btn-primary {
+  background-color: #28a745;
+  color: white;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #218838;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #545b62;
+}
+
+/* Feedback messages */
+.feedback {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  color: #856404;
+}
+
+/* Input field styling */
+input[type="text"] {
+  width: 80%;
+  padding: 12px;
+  margin: 15px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Tombol umum */
+button,
+.start-button {
+  padding: 12px 24px;
+  background-color: #28a745;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 18px;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover,
+.start-button:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Reset link (teks) */
+.reset-link {
+  display: inline-block;
+  margin-top: 20px;
+  color: #007bff;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.2s;
+}
+
+.reset-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* Styling untuk area quiz dan timer */
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 1.6em;
+}
+
+#timer {
+  font-weight: bold;
+  color: #dc3545;
+  font-size: 1.3em;
+}
+
+/* Username display in quiz */
+.username {
+  color: #007bff;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+/* Styling untuk halaman hasil */
+.container p {
+  font-size: 1.2em;
+  margin: 15px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-bar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .stats-cards {
+    flex-direction: column;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .history-item {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .game-item {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
