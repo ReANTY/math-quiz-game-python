@@ -26,7 +26,9 @@ env/
 ENV/
 
 # Database
+*.db
 *.db-journal
+quiz_game.db
 
 # IDE
 .vscode/
@@ -45,4 +47,18 @@ Thumbs.db
 .env
 
 # Azure
-.azure/ 
+.azure/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Documentation files (optional)
+*.pdf
+*.zip
+
+# Image files (screenshots, etc.)
+code*.png
+screenshot*.png 

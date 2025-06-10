@@ -3,21 +3,20 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
+import pymysql
+from config import config
+
+# Install PyMySQL as MySQLdb
+pymysql.install_as_MySQLdb()
 
 app = Flask(__name__)
 
-# Configuration for different environments
+# Load configuration based on environment
+config_name = os.environ.get('FLASK_ENV', 'development')
 if os.environ.get('WEBSITE_SITE_NAME'):  # Azure environment
-    app.secret_key = os.environ.get('SECRET_KEY', 'azure-production-key-change-this')
-    # Use absolute path for Azure
-    basedir = '/home/site/wwwroot'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'quiz_game.db')
-else:  # Local development
-    app.secret_key = 'your_secret_key'
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'quiz_game.db')
+    config_name = 'production'
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config.from_object(config[config_name])
 
 db = SQLAlchemy(app)
 

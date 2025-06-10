@@ -355,3 +355,7 @@ https://math-quiz-game-yourname.azurewebsites.net
 - ✅ Professional URL
 
 **Selamat! Aplikasi Anda sudah live di cloud! 🚀**
+
+# Double-click file atau jalankan:
+
+setup_mysql.bat
