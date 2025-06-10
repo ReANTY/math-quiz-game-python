@@ -1,6 +1,6 @@
 # 🌐 Panduan Deploy Math Quiz Game ke Azure
 
-Panduan lengkap untuk deploy aplikasi Math Quiz Game ke **Azure App Service**.
+Panduan lengkap untuk deploy aplikasi Math Quiz Game ke **Azure App Service** dengan opsi **MySQL Database**.
 
 ## 📋 **Prerequisites**
 
@@ -20,6 +20,30 @@ Panduan lengkap untuk deploy aplikasi Math Quiz Game ke **Azure App Service**.
 # Install Git (jika belum ada)
 # Download dari https://git-scm.com/download
 ```
+
+## 🗄️ **Opsi Database untuk Azure**
+
+### **Opsi 1: SQLite (Default/Fallback)**
+
+- ✅ **Pros**: Simple, no additional cost, auto-fallback
+- ❌ **Cons**: Data akan hilang saat redeploy, tidak persistent
+- 💰 **Cost**: Free
+
+### **Opsi 2: Azure Database for MySQL (Recommended)**
+
+- ✅ **Pros**: Persistent data, scalable, managed service, backup otomatis
+- ✅ **Perfect for**: Production apps, data persistence
+- 💰 **Cost**: ~$15-50/month (tergantung tier)
+
+### **Opsi 3: Azure SQL Database**
+
+- ✅ **Pros**: Enterprise grade, advanced features
+- ❌ **Cons**: Lebih mahal, perlu modify code
+- 💰 **Cost**: ~$25-100/month
+
+## 🚀 **Deploy dengan SQLite (Termudah)**
+
+### **Step 1: Quick Deploy**
 
 ## 🚀 **Metode 1: Deploy via Azure Portal (Termudah)**
 
@@ -153,14 +177,106 @@ az webapp config appsettings set \
     --settings SECRET_KEY="your-super-secret-key-here"
 ```
 
-## 🗄️ **Database Considerations**
+## 🚀 **Deploy dengan Azure Database for MySQL (Production)**
 
-### **SQLite (Current)**
+### **Step 1: Create Azure Database for MySQL**
 
-- ✅ **Pros**: Simple, no additional cost
+```bash
+# Create Azure Database for MySQL (Flexible Server)
+az mysql flexible-server create \
+    --resource-group math-quiz-rg \
+    --name math-quiz-mysql-server \
+    --location eastus \
+    --admin-user mysqladmin \
+    --admin-password YourStrongPassword123! \
+    --sku-name Standard_B1ms \
+    --tier Burstable \
+    --storage-size 20 \
+    --version 8.0.21
+
+# Create database
+az mysql flexible-server db create \
+    --resource-group math-quiz-rg \
+    --server-name math-quiz-mysql-server \
+    --database-name quiz_game_db
+```
+
+### **Step 2: Configure Firewall**
+
+```bash
+# Allow Azure services
+az mysql flexible-server firewall-rule create \
+    --resource-group math-quiz-rg \
+    --name math-quiz-mysql-server \
+    --rule-name AllowAzureServices \
+    --start-ip-address 0.0.0.0 \
+    --end-ip-address 0.0.0.0
+
+# Allow your IP (for management)
+az mysql flexible-server firewall-rule create \
+    --resource-group math-quiz-rg \
+    --name math-quiz-mysql-server \
+    --rule-name AllowMyIP \
+    --start-ip-address YOUR_IP \
+    --end-ip-address YOUR_IP
+```
+
+### **Step 3: Set Environment Variables**
+
+```bash
+# Set MySQL environment variables for App Service
+az webapp config appsettings set \
+    --resource-group math-quiz-rg \
+    --name math-quiz-game-yourname \
+    --settings \
+        AZURE_MYSQL_HOST="math-quiz-mysql-server.mysql.database.azure.com" \
+        AZURE_MYSQL_USER="mysqladmin" \
+        AZURE_MYSQL_PASSWORD="YourStrongPassword123!" \
+        AZURE_MYSQL_DATABASE="quiz_game_db" \
+        SECRET_KEY="your-super-secret-key-here"
+```
+
+### **Step 4: Initialize Database**
+
+Setelah deploy, database akan otomatis membuat tabel saat pertama kali diakses.
+
+## 🗄️ **Database Migration Guide**
+
+### **Dari Local MySQL ke Azure MySQL**
+
+1. **Export data dari local:**
+
+```bash
+# Di Laragon/local MySQL
+mysqldump -u root -p quiz_game_db > backup.sql
+```
+
+2. **Import ke Azure MySQL:**
+
+```bash
+# Connect ke Azure MySQL
+mysql -h math-quiz-mysql-server.mysql.database.azure.com \
+      -u mysqladmin \
+      -p quiz_game_db < backup.sql
+```
+
+### **Via phpMyAdmin (Easier)**
+
+1. **Export** dari local phpMyAdmin:
+   - Pilih database `quiz_game_db`
+   - Export → SQL format
+2. **Import** ke Azure MySQL:
+   - Gunakan MySQL Workbench atau
+   - Azure Database for MySQL portal
+
+## 🗄️ **Database Considerations Legacy**
+
+### **SQLite (Fallback)**
+
+- ✅ **Pros**: Simple, no additional cost, auto-fallback
 - ❌ **Cons**: Data akan hilang saat redeploy, tidak persistent
 
-### **Upgrade ke Azure SQL Database** (Recommended untuk Production)
+### **Azure SQL Database** (Alternative)
 
 ```bash
 # Create Azure SQL Database
@@ -176,13 +292,6 @@ az sql db create \
     --server math-quiz-sql-server \
     --name math-quiz-db \
     --service-objective S0
-```
-
-**Update Connection String:**
-
-```python
-# Tambahkan di app.py untuk Azure SQL
-SQLALCHEMY_DATABASE_URI = 'mssql+pyodbc://sqladmin:YourStrongPassword123!@math-quiz-sql-server.database.windows.net:1433/math-quiz-db?driver=ODBC+Driver+17+for+SQL+Server'
 ```
 
 ## 🔧 **Troubleshooting**
